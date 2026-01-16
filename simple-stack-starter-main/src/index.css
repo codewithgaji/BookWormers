@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Warm paper/cream background */
+    --background: 40 33% 96%;
+    --foreground: 25 30% 15%;
+
+    /* Card with subtle warmth */
+    --card: 40 40% 98%;
+    --card-foreground: 25 30% 15%;
+
+    --popover: 40 40% 98%;
+    --popover-foreground: 25 30% 15%;
+
+    /* Rich forest green primary */
+    --primary: 152 45% 28%;
+    --primary-foreground: 40 40% 98%;
+
+    /* Warm secondary */
+    --secondary: 35 30% 90%;
+    --secondary-foreground: 25 30% 20%;
+
+    /* Muted tones */
+    --muted: 35 20% 92%;
+    --muted-foreground: 25 15% 45%;
+
+    /* Warm accent */
+    --accent: 28 60% 45%;
+    --accent-foreground: 40 40% 98%;
+
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 40 40% 98%;
+
+    --border: 35 25% 85%;
+    --input: 35 25% 88%;
+    --ring: 152 45% 28%;
+
+    --radius: 0.75rem;
+
+    /* Status colors */
+    --status-reading: 152 45% 28%;
+    --status-completed: 142 60% 40%;
+    --status-want: 35 70% 50%;
+    --status-dropped: 0 50% 55%;
+
+    --sidebar-background: 35 30% 94%;
+    --sidebar-foreground: 25 30% 20%;
+    --sidebar-primary: 152 45% 28%;
+    --sidebar-primary-foreground: 40 40% 98%;
+    --sidebar-accent: 35 25% 88%;
+    --sidebar-accent-foreground: 25 30% 20%;
+    --sidebar-border: 35 25% 85%;
+    --sidebar-ring: 152 45% 28%;
+  }
+
+  .dark {
+    --background: 25 25% 10%;
+    --foreground: 40 30% 92%;
+
+    --card: 25 20% 14%;
+    --card-foreground: 40 30% 92%;
+
+    --popover: 25 20% 14%;
+    --popover-foreground: 40 30% 92%;
+
+    --primary: 152 40% 45%;
+    --primary-foreground: 25 25% 10%;
+
+    --secondary: 25 20% 20%;
+    --secondary-foreground: 40 30% 92%;
+
+    --muted: 25 15% 22%;
+    --muted-foreground: 35 15% 60%;
+
+    --accent: 28 50% 50%;
+    --accent-foreground: 25 25% 10%;
+
+    --destructive: 0 55% 45%;
+    --destructive-foreground: 40 30% 92%;
+
+    --border: 25 15% 22%;
+    --input: 25 15% 22%;
+    --ring: 152 40% 45%;
+
+    --status-reading: 152 40% 45%;
+    --status-completed: 142 50% 50%;
+    --status-want: 35 60% 55%;
+    --status-dropped: 0 45% 50%;
+
+    --sidebar-background: 25 20% 12%;
+    --sidebar-foreground: 40 30% 92%;
+    --sidebar-primary: 152 40% 45%;
+    --sidebar-primary-foreground: 25 25% 10%;
+    --sidebar-accent: 25 15% 20%;
+    --sidebar-accent-foreground: 40 30% 92%;
+    --sidebar-border: 25 15% 22%;
+    --sidebar-ring: 152 40% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
