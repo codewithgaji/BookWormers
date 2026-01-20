@@ -3,8 +3,8 @@ from sqlalchemy.orm import sessionmaker
 
 
 
-db_url = "postgresql://postgres:Universal1234@localhost/bookwormer"
+db_url = "postgresql://postgres:Universal1234@localhost/bookwormers"
 
 engine = create_engine(db_url)
 
-session = sessionmaker(auto_flush=False, auto_commit = False, bind=engine)
+session = sessionmaker(autoflush=False, autocommit = False, bind=engine)

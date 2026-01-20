@@ -1,12 +1,38 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from models import Books
 import database_models
 from database import session, engine
+from sqlalchemy.orm import Session
+
 
 app = FastAPI()
 
 
+# DB DUMP
 
+def init_db():
+  db = session() # First create a session
+  count = db.query(database_models.Books).count()
+
+  if count == 0:
+    for book in books:
+      db.add(database_models.Books(**book.model_dump()))
+
+    db.commit()
+
+init_db()
+
+
+def get_db_session():
+  try:
+    db = session()
+    yield db
+  finally:
+    db.close()
+    
+
+
+ # DATA IN FORM OF PYTHON LIST
 books = [
   Books(id=1, title="Ghost Town", author="Gaji Yaqub", genre="Fictional", status="Want To Read", description="Wonders of the Land of RageHole, a Kingdom filled with lots of paradoxical events", pages=300, rating=5),
   
@@ -31,41 +57,95 @@ books = [
 
 
 
+database_models.Base.metadata.create_all(bind=engine) # Used To link the data to the db
+
+
+
+
+# CREATE
+
+@app.post("/book")
+def add_book(book: Books, db: Session = Depends(get_db_session)): # This is used to parse the value of the parameter 'book' to the pydantic model 'Books'.
+
+  id_exists = db.query(database_models.Books).filter(database_models.Books.id == book.id).first() # This is to check the Id against any ID available in the db.
+  if not id_exists:
+    new_book = database_models.Books(**book.model_dump())
+    db.add(new_book)
+    # books.append(book) # This appends/adds to the list of books that we have
+    db.commit()
+    db.refresh(new_book) # This updates new_book in memory
+    return f"{book.title} Added Successfully"
+  return f"Book with id {book.id} Already exists"
+
 
 
 
 @app.get("/")
-def get_books():
-  return books
+def get_books(db: Session = Depends(get_db_session)):
+  db_books = db.query(database_models.Books).all()
+  if not db_books:
+    return "No books Found in the DB"
+  return db_books
+
 
 @app.get("/book/{id}")
-def get_book_by_id(id: int):
-  for i in range(len(books)):
-    if books[i].id == id:
-      return books[i]
+def get_book_by_id(id: int, db: Session = Depends(get_db_session)):
+  db_books = db.query(database_models.Books).all()
+  for book in db_books:
+    if book.id == id:
+      return book
   return "Book Not Found"
-
-
-@app.put("/book")
-def update_book(id: int, book: Books):
-  for i in range(len(books)):
-    if books[i].id == id:
-      books[i] = book
-      return "Book Updated Successfullly"
-    
-  return "Book Not Found, and cannot be updated!"
-
-@app.delete("/book")
-def delete_book(id: int):
-  for i in range(len(books)):
-    if books[i].id == id:
-      del books[i]
-      return "Book Deleted Successfully"
   
+  # for i in range(len(books)):
+  #   if books[i].id == id:
+  #     return books[i]
+  # return "Book Not Found"
+
+
+
+
+# UPDATE
+@app.put("/book/{id}")
+def update_book(book: Books, db: Session = Depends(get_db_session)):
+  db_books = db.query(database_models.Books).filter(database_models.Books.id == book.id).first()
+  if not db_books: # We run this to safely check for NONE so the db doesn't crash
+    return f"Book {book.id} Not Found"
+  
+  # db_books.id = book.id       WE DON'T ACTUALLY SET PKs we only use them to find data in the db
+  db_books.title = book.title
+  db_books.author = book.author
+  db_books.description = book.description
+  db_books.genre = book.genre
+  db_books.pages = book.pages
+  db_books.status = book.status
+  db_books.rating = book.rating
+  db.commit()
+  return f"Book {db_books.id} Updated Successfully"
+  
+  
+  
+  # for i in range(len(books)):
+  #   if books[i].id == id:
+  #     books[i] = book
+  #     return "Book Updated Successfullly"
+    
+  # return "Book Not Found, and cannot be updated!"
+
+
+
+
+# DELETE
+@app.delete("/book")
+def delete_book(id: int, db: Session = Depends(get_db_session)):
+  db_books = db.query(database_models.Books).all()
+  for book in db_books:
+    if book.id == id:
+      db.delete(book) 
+      return f"{book.author} has been Deleted from the DB Successfully"
   return "Book Not Found"
+  
 
 
-@app.post("/book")
-def add_book(book: Books): # This is used to parse the value of the parameter 'book' to the pydantic model 'Books'.
-  books.append(book) # This appends/adds to the list of books that we have
-  return f"{book.title} Added Successfully"
+
+
+
