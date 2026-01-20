@@ -141,7 +141,8 @@ def delete_book(id: int, db: Session = Depends(get_db_session)):
   for book in db_books:
     if book.id == id:
       db.delete(book) 
-      return f"{book.author} has been Deleted from the DB Successfully"
+      db.commit()
+      return f"{book.title} has been Deleted from the DB Successfully"
   return "Book Not Found"
   
 
