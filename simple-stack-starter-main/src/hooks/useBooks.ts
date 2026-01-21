@@ -47,7 +47,7 @@ const mockBooks: Book[] = [
 ];
 
 // Set to true to use mock data (when FastAPI is not running)
-const USE_MOCK_DATA = true;
+const USE_MOCK_DATA = false;
 
 export function useBooks() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -61,32 +61,22 @@ export function useBooks() {
     fetchBooks();
   }, []);
 
-  const fetchBooks = async () => {
-    setIsLoading(true);
-    setError(null);
+ const fetchBooks = async () => {
+  setIsLoading(true);
+  setError(null);
 
-    if (USE_MOCK_DATA) {
-      // Simulate API delay
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      setBooks(mockBooks);
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const data = await getBooks();
-      setBooks(data);
-    } catch (err) {
-      setError("Failed to fetch books. Is your FastAPI server running?");
-      toast({
-        title: "Error",
-        description: "Failed to fetch books. Make sure your FastAPI server is running on localhost:8000",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  try {
+    const data = await getBooks();
+    // SAFETY CHECK: If data is a string or null, set an empty array instead
+    setBooks(Array.isArray(data) ? data : []); 
+  } catch (err) {
+    console.error("Fetch Error:", err);
+    setError("Failed to fetch books.");
+    setBooks([]); // Fallback to empty list so the UI doesn't crash
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   const addBook = async (bookData: BookCreate) => {
     if (USE_MOCK_DATA) {
