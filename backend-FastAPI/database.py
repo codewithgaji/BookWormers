@@ -1,10 +1,15 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import os
 
 
+db_url = os.getenv("DATABASE_URL")
 
-db_url = "postgresql://postgres:Universal1234@localhost/bookwormers"
+if not db_url:
+    raise RuntimeError("DATABASE_URL Not Set")
+
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
 
 engine = create_engine(db_url)
-
 session = sessionmaker(autoflush=False, autocommit = False, bind=engine)
