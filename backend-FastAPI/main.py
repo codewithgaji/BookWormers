@@ -70,6 +70,14 @@ def get_db_session():
 
 # --- ROUTES ---
 
+@app.get("/")
+def welcome_page():
+    return {
+        "Hello": "Welcome to Bookwormers-backend service😁"
+}
+
+
+
 @app.get("/books")
 def get_books(db: Session = Depends(get_db_session)):
     db_books = db.query(database_models.Books).all()
