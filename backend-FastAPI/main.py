@@ -16,7 +16,10 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-# DATA IN FORM OF PYTHON LIST - Standardized to frontend 'ReadingStatus' type
+
+# Create tables and seed data
+database_models.Base.metadata.create_all(bind=engine)
+
 
 
 # DATA IN FORM OF PYTHON LIST - Standardized to frontend 'ReadingStatus' type
@@ -43,6 +46,7 @@ books_seed = [
   Books(id=20, title="Thinking, Fast and Slow", author="Daniel Kahneman", genre="Psychology", status="want_to_read", description="Cognitive biases and decision making", pages=499, rating=4),
 ]
 
+@app.on_event("startup")
 def init_db():
     db = session()
     try:
@@ -54,8 +58,13 @@ def init_db():
     finally:
         db.close()
 
-# Create tables and seed data
-database_models.Base.metadata.create_all(bind=engine)
+
+
+
+
+
+
+
 init_db()
 
 def get_db_session():
