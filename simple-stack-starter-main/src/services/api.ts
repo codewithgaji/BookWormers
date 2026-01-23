@@ -1,7 +1,7 @@
 import { Book, BookCreate, BookUpdate } from "@/types/book";
 
 // Configure your FastAPI backend URL here
-const API_BASE_URL = "http://localhost:8000";
+const API_BASE_URL = ["http://localhost:8000", "https://bookwormers-backend.up.railway.app/books"];
 
 /**
  * GET /books
