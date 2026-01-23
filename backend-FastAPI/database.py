@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 import os
 
 
-db_url = os.getenv("DATABASE_URL")
+db_url = "postgresql://postgres:YxGgjkHPdMAcylcEpISwOwcProsVqHoU@shortline.proxy.rlwy.net:28916/railway"
 
 if not db_url:
     raise RuntimeError("DATABASE_URL Not Set")
