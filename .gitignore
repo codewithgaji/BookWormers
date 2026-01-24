@@ -1,4 +1,9 @@
 backend-FastAPI/__pycache__/*
 
 venv
+
 simple-stack-starter-main/node_modules/*
+
+backend-FastAPI/.env
+backend-FastAPI/.env*.local
+backend-FastAPI/.env.local
