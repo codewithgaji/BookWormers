@@ -4,7 +4,9 @@ import database_models
 from database import session, engine
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
-import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 
