@@ -13,7 +13,7 @@ app = FastAPI()
 # Updated CORS to be more explicit for development
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://book-wormers.vercel.app", "http://localhost:3000"], 
+    allow_origins=["https://book-wormers.vercel.app", "http://localhost:8080"], 
     allow_methods=["*"],
     allow_headers=["*"]
 )
