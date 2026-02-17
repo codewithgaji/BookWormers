@@ -16,7 +16,7 @@ class Books(Base): # To have proper auth
   status = Column(String)
   description = Column(String)
   pages = Column(Integer)
-  rating = Column(Integer)
+  rating = Column(Integer) 
   
   # Created_at
   # updated_at - yet to be implemented
