@@ -14,3 +14,12 @@ if db_url.startswith("postgres://"):
 
 engine = create_engine(db_url)
 session = sessionmaker(autoflush=False, autocommit = False, bind=engine)
+
+
+
+def get_db_session():
+    db = session()
+    try:
+        yield db
+    finally:
+        db.close()
