@@ -4,6 +4,7 @@ from app.db.database import engine, session
 from app.db.schemas.models import BookCreate
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+from app.routers.routers import authRouter
 
 load_dotenv()
 
@@ -64,6 +65,11 @@ def init_db():
 
 
 # --- ROUTES ---
+app.include_router(authRouter)
+
+
+
+
 
 @app.get("/")
 def welcome_page():
