@@ -12,3 +12,12 @@ class Books(BaseModel): # To have proper auth
   
   # Created_at
   # updated_at - yet to be implemented
+
+class BookCreate(BaseModel):
+  title: str
+  author: str
+  genre: str
+  status: str
+  description: str
+  pages: int
+  rating: int
