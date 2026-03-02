@@ -1,8 +1,7 @@
-from fastapi import FastAPI, Depends, HTTPException, status
-from models import Books, BookCreate
-import database_models
-from database import session, engine
-from sqlalchemy.orm import Session
+from fastapi import FastAPI
+from app.db.models import database_models
+from app.db.database import engine, session
+from app.db.schemas.models import BookCreate
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
