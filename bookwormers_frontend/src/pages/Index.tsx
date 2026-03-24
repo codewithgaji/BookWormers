@@ -9,6 +9,8 @@ import { EmptyState } from "@/components/EmptyState";
 import { DeleteConfirmDialog } from "@/components/DeleteConfirmDialog";
 import { Skeleton } from "@/components/ui/skeleton";
 
+
+// The functions for pages.
 const Index = () => {
   const {
     books,

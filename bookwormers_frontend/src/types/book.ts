@@ -1,5 +1,7 @@
 export type ReadingStatus = "want_to_read" | "reading" | "completed" | "dropped";
 
+
+// These data models are used for type checking in the frontend, and they mirror the data models used in the backend.
 export interface Book {
   id: number;
   title: string;
