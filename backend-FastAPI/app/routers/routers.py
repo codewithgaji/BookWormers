@@ -20,7 +20,7 @@ def get_books(db: Session = Depends(get_db_session)):
 
 
 
-@authRouter.get("/books/{id}")
+@authRouter.get("/books/{id}") # This is a GET request, so we use the path parameter to specify the book ID
 def get_book_by_id(id: int, db: Session = Depends(get_db_session)):
     # .first() is required to get the actual data, not the query object
     book = db.query(database_models.Books).filter(database_models.Books.id == id).first()

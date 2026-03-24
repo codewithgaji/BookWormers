@@ -13,7 +13,7 @@ app = FastAPI()
 # Updated CORS to be more explicit for development
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://book-wormers.vercel.app", "http://localhost:8080"], 
+    allow_origins=["https://book-wormers.vercel.app", "http://localhost:8080"],  # Allowing the two main frontend origins
     allow_methods=["*"],
     allow_headers=["*"]
 )
@@ -55,7 +55,7 @@ def init_db():
         count = db.query(database_models.Books).count()
         if count == 0:
             for book in BOOKS_SEED:
-                db.add(database_models.Books(**book.model_dump()))
+                db.add(database_models.Books(**book.model_dump())) # unpacking the pydantic model to match the SQLAlchemy model
             db.commit()
     finally:
         db.close()
