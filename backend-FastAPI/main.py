@@ -48,6 +48,9 @@ BOOKS_SEED = [
     BookCreate(title="Thinking, Fast and Slow", author="Daniel Kahneman", genre="Psychology", status="want_to_read", description="Cognitive biases and decision making", pages=499, rating=4),
 ]
 
+
+
+# This makes db execute on startup.
 @app.on_event("startup")
 def init_db():
     db = session()
